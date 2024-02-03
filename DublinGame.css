@@ -1,0 +1,310 @@
+/* Reset default styles */
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arimo', sans-serif;
+  background-color: #eee;
+  color: #575757;
+}
+
+/* logo */
+
+.logo-container {
+  text-align:center;
+  }
+
+/* Style the game container */
+.game-container {
+    font-family: Arimo, sans-serif;
+    text-align: center;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+}
+
+/* Style the game title */
+h1 {
+    font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #575757;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h2 {
+    font-family: 'Arimo', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: 575757;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Style the score display */
+.score {
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+    margin-bottom: 1.25rem;
+    background-color: #E7C454;
+}
+
+.score p {
+    margin: 0 0.625rem;
+    font-weight: bold;
+    background-color: #E7C454;
+}
+
+/* Style the message container */
+.message-container {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.625rem;
+  border: .125rem dotted #575757;
+  border-radius: 0.313rem;
+  margin-top:1rem;
+  font-style:bold;
+  background-color:white;
+  z-index:1;
+  width: fit-content;
+}
+
+/* Style the game area */
+.game-area {
+    display: flex;
+    flex-direction: column; /* Stack elements on small screens */
+}
+
+/* Style draggable items */
+.draggable-items {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto; /* Add horizontal scrollbar if needed */
+    max-width: 100%; /* Ensure the container doesn't exceed the screen width */
+    overflow: hidden;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 0.313rem;
+    min-height: 8rem; /* Minimum height to prevent pushing labels too low */
+    position: relative; /* Add relative positioning to create arrow pseudo-element */
+}
+
+.draggable-item {
+    margin: 0.125rem; /* Padding between items */
+    text-align: center;
+    cursor: grab;
+    box-sizing: border-box; /* Ensure padding doesn't affect item size */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 6rem; /* Minimum height for item container */
+    flex: 0 1 auto; /* Allow item containers to have variable widths */
+    position: relative; /* Position for labels */
+}
+
+.draggable-item img {
+    max-height: 80%; /* Set a maximum height to maintain consistency */
+    width: auto; /* Allow images to determine width */
+    position: relative; /* Add relative positioning to create arrow pseudo-element */
+}
+
+.label {
+    position: absolute; /* Position labels relative to the container */
+    bottom: .25rem; /* Adjust this value to control the label's vertical position */
+    left: 50%; /* Center the label horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    font-size: 0.75rem; /* Font size for the label */
+    font-weight: bold;
+    background-color: #575757;
+    box-shadow: 0 0.625rem 0.625rem rgba(0, 0, 0, 0.1);
+    color: #fff;
+    padding: 0.313rem .5rem; /* Padding for the label box */
+    border-radius: 0.313rem;
+    opacity: 0; /* Hide labels by default */
+    transition: all 0.3s cubic-bezier(0.68,-0.55,0.625,1.55); /* Add a smooth transition effect */
+    z-index: 1; /* Bring labels to the front */
+}
+
+/* Show the label when the item is hovered */
+.draggable-item:hover .label {
+    opacity: 1;
+}
+
+.drop-zone-label {
+margin-bottom: .5rem;
+}
+
+.label::before {
+    content: '';
+    position: absolute;
+    bottom: 100%; /* Position the arrow above the label */
+    left: 50%; /* Center the arrow horizontally */
+    transform: translateX(-50%);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-style: solid;
+    border-width: 0.313rem; /* Adjust arrow size */
+    border-color: transparent transparent #575757 transparent; /* Arrow color */
+    z-index: 2; /* Ensure the arrow is above the label and other content */
+}
+
+/* Style drop zones */
+.drop-zones {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.625rem;
+  margin-top: 20px;
+}
+
+.drop-zone {
+  flex: 1;
+  width: auto; /* Set the width to accommodate the images */
+  height: 12.5rem; /* Set the height to accommodate the images */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.hidden {
+    opactity: 0;
+}
+.visible {
+    opacity: 1;
+}
+
+/* Style drop zone images to fit within their containers */
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.no-animation {
+  animation: none !important;
+}
+
+.drop-zone-image {
+  display: block;
+  opacity: 1; /* Start with the ready image fully visible */
+  max-width: 100%; /* Ensure the image doesn't exceed the container's width */
+  max-height: 100%; /* Ensure the image doesn't exceed the container's height */
+    position: absolute; /* Position the images absolutely within the drop zone */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center both vertically and horizontally */
+}
+
+.correct-image,
+.incorrect-image {
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  animation-iteration-count: 1; /* Add this line to play the animation only once */
+}
+
+.correct-image {
+  animation: flash 4s; /* Remove "infinite" to play the animation only once */
+}
+
+.incorrect-image {
+  animation: flash 4s; /* Remove "infinite" to play the animation only once */
+}
+
+/* Style drop zone labels */
+.drop-zone-label {
+  position: absolute;
+  bottom: -0.625rem; /* Adjust the vertical position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem; /* Customize the font size */
+  font-weight: bold;
+}
+
+/* Style reset button */
+
+/* Center the reset button horizontally */
+.reset-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Define the default styles for the button */
+.reset-button {
+  font-size: 1rem;
+    padding: 0.625rem 20px;
+    background-color: #575757;
+    color: #fff;
+    border: none;
+    border-radius: 0.313rem;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 0.625rem 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+/* Define the hover effect */
+.reset-button:hover {
+  background-color: #509D2E; /* Hover background color */
+  box-shadow: 0 0.625rem 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+/* Score zone style */
+.score-zone-popup {
+  display: none;
+  justify-content: center;
+  position: fixed;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  align-items: center;
+}
+.score-zone {
+  width: 50%;
+  height: auto;
+  background-color: white;
+  border: solid 5px #555;
+  color: #555;
+  text-align: center;
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  align-self: center;
+}
+.close{
+  width: 20px;
+  height: 20px;
+  color: #555;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
