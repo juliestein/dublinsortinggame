@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetButton = document.getElementById("reset-button");
   const closeButton = document.getElementById("close-popup");
   let continueGame=true;
+  let gameData=[];
   resetButton.addEventListener("click", () => {
     // Reset the score counters
     correctCount = 0;
@@ -397,6 +398,8 @@ function checkDropCategory(event, expectedCategory, dropZone) {
         dropZoneImage.style.opacity = "1"; // Re-display the dropZoneImage
       }, 500); // Adjust the duration (in milliseconds) as needed
     }, 2000); // Adjust the duration (in milliseconds) as needed
+
+    gameData.push({"item":droppedLabel,"isCorrect":true});
   } else {
     // Incorrect category
     console.log(`Item ${droppedLabel} was dropped in the wrong category: ${droppedCategory}`);
@@ -421,6 +424,8 @@ function checkDropCategory(event, expectedCategory, dropZone) {
         dropZoneImage.style.opacity = "1"; // Re-display the dropZoneImage
       }, 500); // Adjust the duration (in milliseconds) as needed
     }, 2000); // Adjust the duration (in milliseconds) as needed
+
+    gameData.push({"item":droppedLabel,"isCorrect":false});
   }
   // Remove the item from the list
   removeItemByIndex(itemIndex);
@@ -463,14 +468,14 @@ function removeItemByIndex(index) {
           continueGame=false;
           // Delay to display end game to allow counters to update
           setTimeout(() => {
-            ShowEndGameMessage(); // Display End game message
+            ShowEndGameMessage(true); // Display End game message
           }, 500); // Adjust the duration (in milliseconds) as needed
         }
       }
       else
         // Delay to display end game to allow counters to update
         setTimeout(() => {
-          ShowEndGameMessage(); // Display End game message
+          ShowEndGameMessage(false); // Display End game message
         }, 500); // Adjust the duration (in milliseconds) as needed
     });
   });
@@ -503,6 +508,19 @@ function removeItemByIndex(index) {
     if(scoreZone.length>=1)
       scoreZone[0].style.display = "flex";
 
+    //call PHP for MySQL data entry
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "submitGame.php");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    const body = JSON.stringify({"Score": correctCount,"gameData":gameData});
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 201) {
+        console.log(JSON.parse(xhr.responseText));
+      } else {
+        console.log(`Error: ${xhr.status}`);
+      }
+    };
+    xhr.send(body);
       //TODO: sharing Links
     // //get screenshot to share
     // const screenshotTarget =  document.getElementsByClassName("score-zone-popup")[0];

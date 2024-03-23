@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dublin Sorting Game</title>
+    <link rel="stylesheet" href="DublinGame.css">
+</head>
+<body>
+ 
+    <div class="game-container">
+        <div class="logo-container">
+<img src="logos/dublin-logo-element-sm.png"></div>
+        <h1>Dublin Sorting Game</h1>
+        <h2>Are you one of Dublin's super sorters? Drag items into the correct containers to test your knowledge and score points!</h2>
+            <div class="score">
+            <p>Correct: <span id="correct-count">0</span></p>
+            <p>Incorrect: <span id="incorrect-count">0</span></p>
+        </div>
+            <div class="items-container"> 
+                <div class="draggable-items">
+                <!-- Draggable items will be added dynamically -->
+            </div>
+                <div id="message-container" class="message-container"></div></div>
+
+
+<div class="drop-zones">
+               
+<div class="drop-zone" data-category="CompostingBin">
+    <img class="drop-zone-image" src="bins/dublin_compost.png" alt="Composting Bin">
+    <img class="correct-image hidden no-animation" src="bins/dublin_compost_yes.png" alt="Composting Bin Yes">
+    <img class="incorrect-image hidden no-animation" src="bins/dublin_compost_no.png" alt="Composting Bin No">
+    <div class="drop-zone-label">COMPOST</div>
+</div>
+
+<div class="drop-zone" data-category="RecyclingBin">
+    <img class="drop-zone-image" src="bins/dublin_recycle.png" alt="Recycling Bin">
+    <img class="correct-image hidden no-animation" src="bins/dublin_recycle_yes.png" alt="Recycling Bin Yes">
+    <img class="incorrect-image hidden no-animation" src="bins/dublin_recycle_no.png" alt="Recycling Bin No">
+    <div class="drop-zone-label">RECYCLE</div>
+</div>
+
+<div class="drop-zone" data-category="GarbageBin">
+    <img class="drop-zone-image" src="bins/dublin_landfill.png" alt="Landfill Bin">
+    <img class="correct-image hidden no-animation" src="bins/dublin_landfill_yes.png" alt="Landfill Bin Yes">
+    <img class="incorrect-image hidden no-animation" src="bins/dublin_landfill_no.png" alt="Landfill Bin No">
+    <div class="drop-zone-label">LANDFILL</div>
+</div>
+
+<div class="drop-zone" data-category="SpecialHandling">
+    <img class="drop-zone-image" src="bins/dublin_special.png" alt="Special Handling">
+    <img class="correct-image hidden no-animation" src="bins/dublin_special_yes.png" alt="Special Handling Yes">
+    <img class="incorrect-image hidden no-animation" src="bins/dublin_special_no.png" alt="Special Handling No">
+    <div class="drop-zone-label">SPECIAL HANDLING</div>
+</div>
+
+            </div>
+        </div>
+        <div class="reset-button-container">
+        <button id="reset-button" class="reset-button">Reset My Score</button>
+    </div>
+    </div>
+    <div class="score-zone-popup">
+        <div class="score-zone">
+            <a id="close-popup" class="close">x</a>
+            <p id="score"></p>
+            <div id="share" >
+            <!-- <h2>Share your score:</h2>
+            <a id="shareX" target="_blank" href="https://twitter.com/intent/tweet?text=I%20just%20scored%20100%20points!">Twitter</a>
+            <a id="shareFb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.com">Facebook</a> -->
+          </div>
+        </div>
+    </div>
+    <script src="DublinGame.js"></script>
+</body>
+</html>
