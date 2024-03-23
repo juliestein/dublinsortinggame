@@ -521,33 +521,11 @@ function removeItemByIndex(index) {
       }
     };
     xhr.send(body);
-      //TODO: sharing Links
-    // //get screenshot to share
-    // const screenshotTarget =  document.getElementsByClassName("score-zone-popup")[0];
-    
-    // html2canvas(screenshotTarget).then((canvas) => {
-    //     const base64image = canvas.toDataURL("image/png");
-    //     var url=base64image; //Set desired URL here
-    //     var img=base64image+"/image.png"; //Set Desired Image here
-
-    //     fetch(url)
-    //     .then(res => res.blob())
-    //     .then(blob => {
-    //       url = URL.createObjectURL(blob);
-    //       var totalurl=encodeURIComponent(url+'?img='+img);
-    //       let shareFb = document.getElementById("shareFb");
-    //       let shareX = document.getElementById("shareX");
-    //       shareFb.href = 'http://www.facebook.com/sharer.php?u='+encodeURIComponent(url),'','width=500, height=500, scrollbars=yes, resizable=no';
-    //       shareX.href="https://twitter.com/intent/tweet?text=I%20just%20scored%20100%20points!"
-    //     })
-    //  });  
   }
   function downloadURI(uri, name) {
     var link = document.createElement("a");
     link.download = name;
     link.href = uri;
     link.click();
-    //after creating link you should delete dynamic link
-    //clearDynamicLink(link); 
 }
 });
