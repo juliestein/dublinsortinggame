@@ -41,12 +41,66 @@ h1 {
 
 h2 {
     font-family: 'Arimo', sans-serif;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: 575757;
   text-align: center;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+    font-family: 'Arimo', sans-serif;
+  font-size: 1rem;
+  color: 575757;
+  text-align: center;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
+}
+
+h4 {
+    font-family: 'Arimo', sans-serif;
+  font-size: .8rem;
+  color: 575757;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+ul { 
+  padding-left: 2rem; padding-right: 2rem;}
+
+li {
+padding-bottom: .75rem;
+}
+
+li::marker {
+  color: #509d2e;
+}
+
+hr.dotted {
+  border-top: 3px dotted #509d2e;
+}
+
+/* Unvisited link */
+a:link {
+    color: #509d2e;
+    text-decoration:none;
+}
+/* Visited link */
+a:visited {
+    color: #509d2e;
+    text-decoration:none;
+}
+/* Mouse over link */
+a:hover {
+    color: #509d2e;
+    text-decoration:underline;
+}
+/* Selected link (when clicked) */
+a:active {
+    color: #509d2e;
+    text-decoration:underline;
 }
 
 /* Style the score display */
@@ -91,10 +145,11 @@ h2 {
 .draggable-items {
     display: flex;
     gap: 1rem;
+    padding:1rem;
     overflow-x: auto; /* Add horizontal scrollbar if needed */
     max-width: 100%; /* Ensure the container doesn't exceed the screen width */
     overflow: hidden;
-    justify-content: center; /* Center items horizontally */
+    justify-content: left; /* Center items horizontally */
     align-items: center; /* Center items vertically */
     margin-bottom: 0.313rem;
     min-height: 8rem; /* Minimum height to prevent pushing labels too low */
@@ -146,7 +201,9 @@ h2 {
 .drop-zone-label {
 margin-bottom: .5rem;
 }
-
+.drop-zone-description {
+margin-bottom: .5rem;
+}
 .label::before {
     content: '';
     position: absolute;
@@ -278,33 +335,37 @@ margin-bottom: .5rem;
 /* Score zone style */
 .score-zone-popup {
   display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   justify-content: center;
   position: fixed;
   cursor: pointer;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  width: 50%;
+  height: 50%;
   align-items: center;
 }
 .score-zone {
-  width: 50%;
+width: 50%;
   height: auto;
-  background-color: white;
-  border: solid 5px #555;
-  color: #555;
+  background-color:#509d2e;
+  border: none;
+  color: white;
   text-align: center;
-  border-radius: 6px;
-  padding: 20px;
+  font-weight:bold;
+  border-radius: 0.313rem;
+  padding: 2rem;
   position: relative;
   z-index: 1;
   align-self: center;
+  box-shadow: 0 0.625rem 0.625rem rgba(0, 0, 0, 0.1);
 }
 .close{
-  width: 20px;
-  height: 20px;
-  color: #555;
-  top: 0;
-  right: 0;
+  width: 50px;
+  height: 50px;
+  color: white;
+  top: .5rem;
+  right: .2rem;
   position: absolute;
 }

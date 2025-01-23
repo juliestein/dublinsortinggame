@@ -8,8 +8,8 @@
 
     //Connect To Database
 	$hostname="localhost";
-	$username="udj6sjsfmlmdd";
-	$password="}j2^3^1p6&.k";
+	$username="u2mwygbluzrts";
+	$password="5yph01uukcga";
 	$dbname="dbnri5bk2gmuc1";
 	$conn = mysqli_connect($hostname,$username, $password,$dbname) or die ("<html><script language='JavaScript'>alert('Unable to connect to database! Please try again later.'),history.go(-1)</script></html>");
 

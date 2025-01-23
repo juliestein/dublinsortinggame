@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.getElementById("close-popup");
   let continueGame=true;
   let gameData=[];
+let messageIntervalId = null;
+let messageEndTime = null;
+
   resetButton.addEventListener("click", () => {
     // Reset the score counters
     correctCount = 0;
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 {imageSrc: "items/compost_takeoutboxdirty.png", category: "CompostingBin", label: "fiber takeout box"},
 {imageSrc: "items/compost_teabag.png", category: "CompostingBin", label: "tea bag"},
 {imageSrc: "items/compost_twigs.png", category: "CompostingBin", label: "twigs"},
-{imageSrc: "items/compost_utensils.png", category: "CompostingBin", label: "compostable utensils"},
+{imageSrc: "items/compost_utensils.png", category: "CompostingBin", label: "wooden utensils"},
 {imageSrc: "items/compost_veggies.png", category: "CompostingBin", label: "veggie scraps"},
 {imageSrc: "items/garbage_basketball.png", category: "GarbageBin", label: "basketball"},
 {imageSrc: "items/garbage_brokenplanter.png", category: "GarbageBin", label: "broken planter"},
@@ -200,7 +203,7 @@ const itemMessages = {
 "fiber takeout box": { correctMessage: "Great job!", incorrectMessage: "Oops! This fiber takeout box is compostable!",},
 "tea bag": { correctMessage: "Great job!", incorrectMessage: "Oops! This tea bag is compostable!",},
 "twigs": { correctMessage: "Great job!", incorrectMessage: "Oops! These twigs are compostable!",},
-"compostable utensils": { correctMessage: "Great job!", incorrectMessage: "Oops! These compostable utensils are compostable!",},
+"wooden utensils": { correctMessage: "Great job!", incorrectMessage: "Oops! These compostable utensils are compostable!",},
 "veggie scraps": { correctMessage: "Great job!", incorrectMessage: "Oops! These veggie scraps are compostable!",},
 "basketball": { correctMessage: "Great job!", incorrectMessage: "Oops! This basketball must be sent to landfill.",},
 "broken planter": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken planter must be sent to landfill.",},
@@ -263,40 +266,40 @@ const itemMessages = {
 "cardboard tubes": { correctMessage: "Great job!", incorrectMessage: "Oops! These cardboard tubes can be recycled!",},
 "plastic water bottle": { correctMessage: "Great job!", incorrectMessage: "Oops! This plastic water bottle can be recycled!",},
 "yogurt cup": { correctMessage: "Great job!", incorrectMessage: "Oops! This yogurt cup can be recycled!",},
-"batteries": { correctMessage: "Great job!", incorrectMessage: "Oops! These batteries require special treatment.",},
-"bleach container": { correctMessage: "Great job!", incorrectMessage: "Oops! This bleach container requires special treatment.",},
-"old furniture": { correctMessage: "Great job!", incorrectMessage: "Oops! This old furniture requires special treatment.",},
-"plastic furniture": { correctMessage: "Great job!", incorrectMessage: "Oops! This plastic furniture requires special treatment.",},
-"broken chair": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken chair requires special treatment.",},
-"wooden furniture": { correctMessage: "Great job!", incorrectMessage: "Oops! This wooden furniture requires special treatment.",},
-"chemical spray bottle": { correctMessage: "Great job!", incorrectMessage: "Oops! This chemical spray bottle require special treatment.",},
-"broken coffee maker": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken coffee maker requires special treatment.",},
-"broken computer": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken computer requires special treatment.",},
-"game controller": { correctMessage: "Great job!", incorrectMessage: "Oops! This game controller requires special treatment.",},
-"desk chair": { correctMessage: "Great job!", incorrectMessage: "Oops! This desk chair requires special treatment.",},
-"office chair": { correctMessage: "Great job!", incorrectMessage: "Oops! This office chair requires special treatment.",},
-"bulky furniture": { correctMessage: "Great job!", incorrectMessage: "Oops! This bulky furniture requires special treatment.",},
-"assorted wires": { correctMessage: "Great job!", incorrectMessage: "Oops! These assorted wires require special treatment.",},
-"fire extinguisher": { correctMessage: "Great job!", incorrectMessage: "Oops! This fire extinguisher requires special treatment.",},
-"broken fire alarm": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken fire alarm requires special treatment.",},
-"broken refrigerator": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken refrigerator requires special treatment.",},
-"head phones": { correctMessage: "Great job!", incorrectMessage: "Oops! These head phones require special treatment.",},
-"herbicide spray bottle": { correctMessage: "Great job!", incorrectMessage: "Oops! This herbicide spray bottle requires special treatment.",},
-"broken laptop": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken laptop requires special treatment.",},
-"light bulbs": { correctMessage: "Great job!", incorrectMessage: "Oops! These light bulbs require special treatment.",},
-"medication": { correctMessage: "Great job!", incorrectMessage: "Oops! This medication requires special treatment.",},
-"broken microwave": { correctMessage: "Great job!", incorrectMessage: "Oops! This broken microwave requires special treatment.",},
-"used motor oil": { correctMessage: "Great job!", incorrectMessage: "Oops! This used motor oil requires special treatment.",},
-"used motor oil filter": { correctMessage: "Great job!", incorrectMessage: "Oops! This used motor oil filter requires special treatment.",},
-"leftover paint": { correctMessage: "Great job!", incorrectMessage: "Oops! This leftover paint requires special treatment.",},
-"old mobile phone": { correctMessage: "Great job!", incorrectMessage: "Oops! This old mobile phone requires special treatment.",},
-"fuel canister": { correctMessage: "Great job!", incorrectMessage: "Oops! This fuel canister requires special treatment.",},
-"speakers": { correctMessage: "Great job!", incorrectMessage: "Oops! These speakers require special treatment.",},
-"small electronics": { correctMessage: "Great job!", incorrectMessage: "Oops! These small electronics require special treatment.",},
-"cleaner bottle": { correctMessage: "Great job!", incorrectMessage: "Oops! This cleaner bottle requires special treatment.",},
-"syringe": { correctMessage: "Great job!", incorrectMessage: "Oops! This syringe requires special treatment.",},
-"television": { correctMessage: "Great job!", incorrectMessage: "Oops! This television requires special treatment.",},
-"large appliance": { correctMessage: "Great job!", incorrectMessage: "Oops! This large appliance requires special treatment.",},
+"batteries": { correctMessage: "Great job! Used batteries should be placed on top of your recycling cart in a clear plastic bag on the day of collection or to the battery bucket at your multifamily property.", incorrectMessage: "Batteries require special handling in Dublin. Used batteries should be placed on top of your recycling cart in a clear plastic bag on the day of collection. Residents of multifamily properties can request free battery bucket for their property through their property manager from AVI.",},
+"bleach container": { correctMessage: "Great job! Household cleaners can be hazardous, even in small quantities. Take it to your local HHW Facility for proper disposal.", incorrectMessage: "Household cleaners and containers can be hazardous and they require special handling in Dublin. Take it to your local HHW Facility for proper disposal.",},
+"old furniture": { correctMessage: "Great job! Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"plastic furniture": { correctMessage: "Great job! Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"broken chair": { correctMessage: "Great job! Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"wooden furniture": { correctMessage: "Great job! Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"chemical spray bottle": { correctMessage: "Great job! Household cleaners and containers can be hazardous. Take it to your local HHW Facility for proper disposal.", incorrectMessage: "Household cleaners and containers can be hazardous and they require special handling in Dublin. Take it to your local HHW Facility for proper disposal.",},
+"broken coffee maker": { correctMessage: "Great job! Small appliances count as electronic waste, so you’ll need to request a special large item pick up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small appliances count as electronic waste, so you’ll need to request a special large item pick up or take it  to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"broken computer": { correctMessage: "Great job! Small appliances count as electronic waste, so you’ll need to request a  special large item pick up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small appliances count as electronic waste, so you’ll need to request a special large item pick up or take it  to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"game controller": { correctMessage: "Great job! Small appliances count as electronic waste, so you’ll need to request a special large item pick up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small appliances count as electronic waste, so you’ll need to request a special large item pick up or take it  to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"desk chair": { correctMessage: "Great job! Desk chairs are too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Desk chairs are too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"office chair": { correctMessage: "Great job! Office chairs are too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Office chairs are too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"bulky furniture": { correctMessage: "Great job! Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!", incorrectMessage: "Furniture is too bulky for curbside containers, so you'll need to request a special large item pick-up. Before you do that, consider repair or donation options!",},
+"assorted wires": { correctMessage: "Great job! Wires and cables contain valuable metals, but they can break recycling equipment and are not allowed in curbside recycling containers. You can request a special pick-up or drop them off at your local HHW facility.", incorrectMessage: "Wires and cables contain valuable metals, but they can break recycling equipment and are not allowed in curbside recycling containers. You can request a special large item pick-up or drop them off at your local HHW facility.",},
+"fire extinguisher": { correctMessage: "Great job! Fire extinguishers are considered hazardous and require special disposal at your local HHW facility. First, consider extending the life of your extinguisher through refurbishing, repair, and/or recharging with a company specializing in fire extinguishers.", incorrectMessage: "Fire extinguishers are considered hazardous and require special disposal at your local HHW facility. First, consider extending the life of your extinguisher through refurbishing, repair, and/or recharging with a company specializing in fire extinguishers.",},
+"broken fire alarm": { correctMessage: "Great job! Small electronic devices like smoke alarms count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small electronic devices like smoke alarms count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"broken refrigerator": { correctMessage: "Great job! Refrigerators and other large appliances are considered bulky and hazardous and require special large item pick-up in Dublin. But first, consider repairing your appliance with iFixit, or explore local donation options.", incorrectMessage: "Refrigerators and other large appliances are considered bulky and hazardous and require special large item pick-up in Dublin. But first, consider repairing your appliance with iFixit, or explore local donation options.",},
+"head phones": { correctMessage: "Great job! Headphones count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small appliances count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"herbicide spray bottle": { correctMessage: "Great job! Herbicides, pesticides, and other toxic products can be hazardous, even in small quantities. Take it to your local HHW Facility for proper disposal.", incorrectMessage: "Herbicides, pesticides, and other toxic products can be hazardous, even in small quantities. Take it to your local HHW Facility for proper disposal.",},
+"broken laptop": { correctMessage: "Great job! Laptops and tablets count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Laptops and tablets count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"light bulbs": { correctMessage: "Great job! CFL, flourescent, and LED light bulbs are considered hazardous and must be taken to your local HHW facility for disposal.", incorrectMessage: "CFL, flourescent, and LED light bulbs are considered hazardous and must be taken to your local HHW facility for disposal.",},
+"medication": { correctMessage: "Great job! Medications are considered hazardous and require special handling at kiosks that are designed to accept pharmaceutical waste, which can be found at most local drug stores and pharmacies. Questions? Reach out to safedrugdisposal@acgov.org.", incorrectMessage: "Medications are considered hazardous and require special handling at kiosks that are designed to accept pharmaceutical waste, which can be found at most local drug stores and pharmacies. Questions? Reach out to safedrugdisposal@acgov.org.",},
+"broken microwave": { correctMessage: "Great job! Small appliances count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small appliances count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"used motor oil": { correctMessage: "Great job! Used motor oil should be recycled at a Certified Collection Center or taken to your local HHW facility. (Don't forget to bring your filter, too!)", incorrectMessage: "Used motor oil should be recycled at a Certified Collection Center or taken to your local HHW facility. (Don't forget to bring your filter, too!)",},
+"used motor oil filter": { correctMessage: "Great job! Used motor oil filters should be recycled at a Certified Collection Center or taken to your local HHW facility. You can also call AVI to request a special oil jug and filter bag for curbside pickup.", incorrectMessage: "Used motor oil filters should be recycled at a Certified Collection Center or taken to your local HHW facility. You can also call AVI to request a special oil jug and filter bag for curbside pickup.",},
+"leftover paint": { correctMessage: "Great job! Leftover paint is considered hazardous and requires special handling at your local HHW facility. But first, consider creative ways to use it up, donate it to a local Paint Care site, or offer it up to friends and neighbors.", incorrectMessage: "Leftover paint is considered hazardous and requires special handling at your local HHW facility. But first, consider creative ways to use it up, donate it to a local Paint Care site, or offer it up to friends and neighbors.",},
+"old mobile phone": { correctMessage: "Great job! Mobile phones and tablets count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider take-back, repair, or donation options!", incorrectMessage: "Mobile phones and tablets count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"fuel canister": { correctMessage: "Great job! Fuel canisters and compressed air cylinders are hazardous and require special handling. Many hardware and sporting goods stores offer take-bake or buy-back programs. Or, you can take it to your local HHW drop-off site.", incorrectMessage: "Fuel canisters and compressed air cylinders are hazardous and require special handling. Many hardware and sporting goods stores offer take-bake or buy-back programs. Or, you can take it to your local HHW drop-off site.",},
+"speakers": { correctMessage: "Great job! Speakers count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Speakers count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"small electronics": { correctMessage: "Great job! Small electronics can be picked up during a special large item pick-up or should be taken to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Small electronics can be picked up during a special large item pick-up or should be taken to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"cleaner bottle": { correctMessage: "Great job! Household cleaners can be hazardous, even in small quantities. Take it to your local HHW Facility for proper disposal.", incorrectMessage: "Household cleaners and containers can be hazardous and they require special handling in Dublin. Take it to your local HHW Facility for proper disposal.",},
+"syringe": { correctMessage: "Great job! It is illegal to dispose syringes and needles — also known as sharps — in landfill, compost, or recycling containers. Sharps should be discarded in FDA-approved containers, which can be found in most local drug stores and pharmacies.", incorrectMessage: "It is illegal to dispose syringes and needles — also known as sharps — in landfill, compost, or recycling containers. Sharps should be discarded in FDA-approved containers, which can be found in most local drug stores and pharmacies.",},
+"television": { correctMessage: "Great job! Televisions and monitors count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!", incorrectMessage: "Televisions and monitors count as electronic waste, so you’ll need to request a special large item pick-up or take it to your local HHW facility for proper disposal. Before you do that, consider repair or donation options!",},
+"large appliance": { correctMessage: "Large appliances are considered bulky and hazardous and require special large item pick-up in Dublin. But first, consider repairing your appliance with iFixit, or explore local donation options.",},
   // Add similar entries for other items
 };
 
@@ -434,15 +437,42 @@ function checkDropCategory(event, expectedCategory, dropZone) {
   createDraggableItems();
 }
 
-function showMessage(message) {
+function showMessage(message, duration = 12000) {
   const messageContainer = document.getElementById("message-container");
+
+  // Update the message content
   messageContainer.textContent = message;
   messageContainer.style.display = "block";
 
-  // Hide the message after a certain duration (e.g., 3 seconds)
-  setTimeout(() => {
-    messageContainer.style.display = "none";
-  }, 2000); // Adjust the duration (in milliseconds) as needed
+  // Set the end time for the message display
+  messageEndTime = Date.now() + duration;
+
+  // Clear any existing interval to prevent overlap
+  if (messageIntervalId) {
+    clearInterval(messageIntervalId);
+  }
+
+  // Start a new interval to check the display duration
+  messageIntervalId = setInterval(() => {
+    // Check if the current time has passed the end time
+    if (Date.now() >= messageEndTime) {
+      messageContainer.style.display = "none";
+      clearInterval(messageIntervalId);  // Clear the interval when done
+      messageIntervalId = null;
+    }
+  }, 100);  // Check every 100ms for accuracy
+}
+
+function hideMessage() {
+  const messageContainer = document.getElementById("message-container");
+  messageContainer.style.display = "none";
+
+  // Clear the interval and reset the end time
+  if (messageIntervalId) {
+    clearInterval(messageIntervalId);
+    messageIntervalId = null;
+  }
+  messageEndTime = null;
 }
 
 // Function to remove an item from the list by index
